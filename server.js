@@ -70,7 +70,7 @@ passport.use(new LocalStrategy({
 
 const storage = multer.diskStorage({
 destination: function (req, file, cb) {
-    cb(null, '/upload')
+    cb(null, './public/upload')
 },
 filename : function(req, file, cb){
     cb(null, file.originalname = Buffer.from(file.originalname, 'latin1').toString('utf8') )
