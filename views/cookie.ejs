@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠키페이지</title>
+</head>
+<body>
+    <% for(let i=0; i< prdData.length; i++){ %>
+        <div class="list" style="border:1px solid #000; margin-bottom:20px">
+            <div>
+                <div><img width="200px" src="/upload/<%- prdData[i].prdfile %>"></div>
+            </div>
+            <div>
+                <div>상품명</div>
+                <div><%- prdData[i].prdname %></div>
+            </div>
+        </div>
+        <% } %>
+</body>
+</html>

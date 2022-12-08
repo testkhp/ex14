@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>매장안내 페이지</title>
+</head>
+<body>
+    <% if(localData.length == 0){ %>
+        <div>해당하는 매장이 없습니다</div>
+    <% } else {%>
+    <% for(let i=0; i< localData.length; i++){ %>
+        <div class="list" style="border:1px solid #000; margin-bottom:20px">
+            <div>
+                <div>매장번호</div>
+                <div><%- localData[i].num %></div>
+            </div>
+            <div>
+                <div>매장명</div>
+                <div><%- localData[i].name %></div>
+            </div>
+            <div>
+                <div>지역</div>
+                <div><%- localData[i].locale%></div>
+            </div>
+            <div>
+                <div>매장주소</div>
+                <div><%- localData[i].address%></div>
+            </div>
+            <div>
+                <div>매장전화번호</div>
+                <div><%- localData[i].phone %></div>
+            </div>
+        </div>
+    <% } %>
+    <% } %>
+        <form action="/search/area" method="get">
+            <!--시/도 선택-->
+            <div style="border:1px solid red; padding:30px; margin-bottom:30px">
+                <div>지역으로 검색</div>
+                <select class="city1 citys" name="city1">
+                    <option value>시/도 선택</option>
+                </select>
+                <!-- 구/군 선택-->
+                <select class="city2 citys" name="city2" >
+                    <option value>구/군 선택</option>
+                </select>
+                <button type="submit">검색</button>
+            </div> 
+        </form>
+        <form action="/search/storename" method="get">
+            <!-- 매장명-->
+            <div style="border:1px solid green; padding:30px">
+                <div>매장명으로 검색</div>
+                <input type="text" name="name">
+                <button type="submit">검색</button>
+            </div>
+        </form>
+
+        <script src="/js/hangjungdong.js"></script>
+    <script>
+        /**** 시,도 나오게 처리하는 구간 *****/
+        const city1 = document.querySelector(".city1");
+        const city2 = document.querySelector(".city2");
+    
+        // 시/도 출력될 div 태그생성해서 담아줄 변수 
+        hangjungdong.sido.forEach(function(element,index){ //반복문으로 해당 시에 관련된 데이터갯수만큼 반복문
+            let tag1 = document.createElement("option");
+            let tag1Text = document.createTextNode(element.codeNm);
+            tag1.append(tag1Text);
+            tag1.setAttribute("value",element.codeNm)
+            tag1.setAttribute("data-sido",element.sido)
+            city1.append(tag1);
+        });
+        //시 부분 div 생성후 부모태그에 삽입
+
+        city1.addEventListener("change",function(){
+            let testValue = city1.options[city1.selectedIndex].getAttribute("data-sido");
+            // let testValue2 = city1.options[city1.selectedIndex].value;
+            
+            sigugun(testValue);
+            // console.log(testValue2)
+        });
+
+        // city2.addEventListener("change",function(){
+        //     let testValue3 = city2.options[city2.selectedIndex].value;
+        //     console.log(testValue3)
+        // });
+
+        /**** 시,군구,동 나오게 처리하는 구간 *****/
+        
+
+        function sigugun(sidoCode){
+
+            city2.innerHTML = "<option value>구/군 선택</option>";
+
+            hangjungdong.sigugun.forEach(element => {
+                
+                if(sidoCode == element.sido){
+                    let tag2 = document.createElement("option");
+                    let tag2Text = document.createTextNode(element.codeNm);
+                    tag2.append(tag2Text);
+                    tag2.setAttribute("value",element.codeNm)
+                    city2.append(tag2);
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>
